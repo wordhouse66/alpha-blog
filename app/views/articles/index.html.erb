@@ -1,7 +1,8 @@
+
 <p style="color: green"><%= notice %></p>
 
 <h1>Articles</h1>
-
+<a id='buttoner' href='#'>Gain</a>
 <div id="articles">
   <% @articles.each do |article| %>
     <%= render article %>
@@ -12,3 +13,51 @@
 </div>
 
 <%= link_to "New article", new_article_path %>
+<script>
+
+  let a = document.querySelector('h1')
+  let b = document.querySelector('#buttoner')
+
+  b.addEventListener('click',() => {
+    let post = {
+      name: 'good'
+    }
+      a.textContent = 'Big One'
+      callChange(post)
+      /*changeText(post).then((resolvedResponse) => {
+        a.innerHTML = resolvedResponse
+        b.textContent = 'goodyuo'
+      })*/
+  })
+
+  function changeText(data) {
+    return new Promise((resolve, reject) => {
+      let request = new XMLHttpRequest()
+      request.open('POST', '/categories') 
+      request.onreadystatechange = () => {
+        if (request.readyState === 4) {
+            resolve(request.response)
+        }
+      }
+      request.setRequestHeader('Content-Type', 'application/json')
+      request.send(JSON.stringify(data))
+    })   
+  }
+
+  async function callChange(post) {
+    const responsive = changeText(post)
+    a.innerHTML = await responsive
+    b.textContent = 'goodyuo'
+    console.log(responsive)
+  }
+
+
+
+
+
+
+  
+
+
+
+</script>

@@ -2,5 +2,10 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 
-import 'jquery'
-import 'bootstrap-sprockets'
+//= require jquery3
+//= require popper
+//= require bootstrap
+
+
+
+ReactDOM.render(<MyComponent />, document.getElementById('my-react-app'))

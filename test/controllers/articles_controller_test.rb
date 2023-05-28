@@ -34,7 +34,8 @@ class ArticlesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update article" do
-    patch article_url(@article), params: { article: { content: @article.content, title: @article.title } }
+    #user = User.create(email: 'woo@me.com', password: 'password')
+    patch article_url(@article), params: { article: { description: @article.description, title: @article.title, user_id: user.id } }
     assert_redirected_to article_url(@article)
   end
 

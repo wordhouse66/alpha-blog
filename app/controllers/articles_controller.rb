@@ -1,5 +1,7 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: %i[ show edit update destroy ]
+  protect_from_forgery with: :null_session#, only: :destroy
+  skip_before_action :verify_authenticity_token
 
   # GET /articles or /articles.json
   def index
@@ -13,7 +15,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/new
   def new
-    @article = Article.new
+    @article = current_user.articles.new
   end
 
   # GET /articles/1/edit
@@ -22,7 +24,7 @@ class ArticlesController < ApplicationController
 
   # POST /articles or /articles.json
   def create
-    @article = Article.new(article_params)
+    @article = current_user.articles.new(article_params)
 
     respond_to do |format|
       if @article.save
@@ -66,6 +68,6 @@ class ArticlesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def article_params
-      params.require(:article).permit(:title, :content, :description)
+      params.require(:article).permit(:title, :user_id, :description)
     end
 end
